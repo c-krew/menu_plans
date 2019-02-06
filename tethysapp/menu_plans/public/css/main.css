@@ -1,0 +1,451 @@
+.ssmp-section-divider {
+	display: flex;
+	padding-top: 36px;
+	align-items: center;
+}
+
+.ssmp-divider-title {
+	font-size: 20px;
+	line-height: 19px;
+	margin-right: 25px;
+	letter-spacing: 2px;
+	white-space: nowrap;
+}
+
+@media screen and (min-width: 1024px) {
+	.ssmp-divider-title {
+		margin-right: 50px;
+	}
+}
+
+.ssmp-divider-line {
+	width: 100%;
+	height: 1px;
+	background: url('../images/blue-dot.png') repeat-x center;
+}
+
+.ssmp-title-container {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 36px;
+	justify-content: center;
+	text-transform: uppercase;
+}
+
+.ssmp-title-container .ssmp-print-buttons-container {
+	display: flex;
+}
+
+.ssmp-print-buttons-container .ssmp-print-button {
+	padding-left: 30px;
+}
+
+.ssmp-print-button .ssmp-print-button-title {
+	font-size: 15px;
+	text-transform: none;
+}
+
+.ssmp-menu-planner {
+	font-family: "Soleil", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	box-sizing: border-box;
+}
+
+.yellow-icon {
+	color: #FFAD0E;
+}
+
+/**
+ * RECOMMENDED MENU SECTION
+ */
+.ssmp-rec-menu-days {
+    display: flex;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1024px) {
+	.ssmp-rec-menu-days {
+	    margin-top: 65px;
+	    flex-wrap: nowrap;
+	}
+}
+
+.ssmp-rec-menu-day {
+	display: flex;
+    flex: 0 1 50%;
+	margin-top: 10px;
+	text-align: left;
+    flex-direction: column;
+	border-top: 1px solid #1E1E4B;
+	border-right: 1px solid #1E1E4B;
+	border-bottom: 1px solid #1E1E4B;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-rec-menu-day {
+	    flex: 0 1 33%;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.ssmp-rec-menu-day {
+	    flex: 0 1 15%;
+	    margin-top: 0;
+	}
+}
+
+.ssmp-rec-menu-day p {
+	margin-bottom: 0;
+}
+
+
+/**
+ * WARNING:
+ * These border-left styles are a little weird because the .ssmp-rec-menu-day elements have a hidden sibling
+ * that is only displayed when the media query is print. So, the nth-child stuff is skipping the first element
+ */
+.ssmp-rec-menu-days .ssmp-rec-menu-day{
+	border-left: none;
+}
+
+/* border-left on every element divisible by 2 */
+.ssmp-rec-menu-days .ssmp-rec-menu-day:nth-child( 2n ){
+	border-left: 1px solid #1E1E4B;
+}
+
+@media screen and (min-width: 768px) {
+	/* remove border-left from everyone */
+	.ssmp-rec-menu-days .ssmp-rec-menu-day:nth-child( n ){
+		border-left: none;
+	}
+
+	/* border-left on children 2, 5, 8 */
+	.ssmp-rec-menu-days .ssmp-rec-menu-day:nth-child( 3n+2 ){
+		border-left: 1px solid #1E1E4B;
+	}
+}
+
+@media screen and (min-width: 1030px) {
+	/* remove border-left from everyone */
+	.ssmp-rec-menu-days .ssmp-rec-menu-day:nth-child( n ){
+		border-left: none;
+	}
+
+	/* border-left only on second child */
+	.ssmp-rec-menu-days .ssmp-rec-menu-day:nth-child( 2 ){
+		border-left: 1px solid #1E1E4B;
+	}
+}
+
+.ssmp-menu-day-title {
+	padding: 10px 15px;
+	height: 47px;
+	color: #FFFFFF;
+	font-size: 20px;
+	line-height: 26px;
+	letter-spacing: 2px;
+	background-color: #1E1E4B;
+}
+
+.ssmp-menu-day-body {
+	padding: 8px;
+	text-align: center;
+}
+
+.ssmp-day-recipe-divider {
+	width: 50px;
+	height: 1px;
+	margin: 0 auto;
+	padding: 10px;
+	background: url( '../images/orange-dot.png' ) repeat-x center;
+}
+
+.ssmp-read-recipe {
+	padding: 8px;
+	color: #FFAD0E;
+	font-size: 12px;
+	margin-top: auto;
+	font-weight: bold;
+	line-height: 17px;
+	letter-spacing: 4px;
+	white-space: nowrap;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-read-recipe {
+		letter-spacing: 5px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.ssmp-read-recipe {
+		letter-spacing: 5px;
+	}
+}
+
+.ssmp-menu-planner .dashicons-arrow-right {
+	height: auto;
+	margin-top: -2px;
+	vertical-align: middle;
+}
+
+/**
+ * RECIPES SECTION
+ */
+.ssmp-front-recipes {
+	margin-top: 30px;
+}
+
+.ssmp-recipe-container {
+	margin-top: 36px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media screen and (min-width: 1030px) {
+	.ssmp-recipe-container {
+		flex-wrap: nowrap;
+	}
+}
+
+.ssmp-recipe-image {
+	width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-recipe-image {
+		text-align: center;
+	}
+}
+
+@media screen and (min-width: 1030px) {
+	.ssmp-recipe-image {
+		width: 39%;
+		padding-right: 75px;
+	}
+}
+
+.ssmp-recipe-image img {
+	width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-recipe-image img {
+		width: auto;
+		max-height: 500px;
+	}
+}
+
+.ssmp-recipe-info {
+	width: 100%;
+}
+
+@media screen and (min-width: 1030px) {
+	.ssmp-recipe-info {
+		width: 69%;
+	}
+}
+
+.ssmp-recipe-title {
+	font-size: 36px;
+	line-height: 40px;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+}
+
+.ssmp-remove-recipe-container {
+	width: 200px;
+	min-height: 25px;
+	position: relative;
+}
+
+.ssmp-remove-recipe {
+	font-size: 12px;
+    letter-spacing: normal;
+    text-transform: initial;
+}
+
+.ssmp-remove-recipe a, .ssmp-remove-recipe a:hover, .ssmp-remove-recipe a:visited {
+	color: red;
+}
+
+.ssmp-meal-type {
+	color: #FFAD0E;
+	font-size: 21px;
+	font-weight: bold;
+	line-height: 29px;
+	letter-spacing: 7px;
+}
+
+.ssmp-preparation-items {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ssmp-preparation-item {
+	width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-preparation-items {
+		flex-wrap: nowrap;
+	}
+
+	.ssmp-preparation-item {
+		width: auto;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-left: 1px solid #1E1E4B;
+	}
+
+	.ssmp-preparation-item:first-child {
+		padding-left: 0;
+		border-left: none;
+	}
+}
+
+.ssmp-subsection-title {
+	color: #FFAD0E;
+	font-size: 15px;
+	line-height: 20px;
+	font-weight: bold;
+	letter-spacing: 5px;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-nutrition-items {
+		width: 65%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.ssmp-nutrition-item {
+		flex: 0 0 50%;
+	}
+}
+
+.ssmp-ingredient-label {
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+
+/**
+ * SHOPPING LIST SECTION
+ */
+
+#ssmp-front-shopping-list {
+	margin-top: 30px;
+	min-height: 50px;
+	position: relative;
+}
+
+.main-content #ssmp-front-shopping-list table {
+	border: none;
+  	border-collapse: collapse;
+}
+
+.main-content #ssmp-front-shopping-list table tbody {
+	border: none;
+}
+
+.ssmp-loading-icon {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background: rgba(255,255,255,0.9) url(../images/loader.gif) no-repeat 50% 50%;
+	z-index: 5000;
+	display: none;
+}
+
+#ssmp-shopping-list-categories {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ssmp-shopping-list-category {
+	flex: 0 1 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.ssmp-shopping-list-category {
+		flex: 0 1 49%;
+		margin-left: 5px;
+	}
+}
+
+@media screen and (min-width: 1030px) {
+	.ssmp-shopping-list-category {
+		flex: 0 1 24%;
+	}
+}
+
+.main-content .ssmp-shopping-list-category table tr:first-child th {
+ 	padding: 1em;
+}
+
+.main-content .ssmp-shopping-list-category table tr {
+ 	border: none;
+ }
+
+.main-content .ssmp-shopping-list-category table th {
+	font-size: 20px;
+ 	border: 1px solid #1E1E4B;
+ }
+
+.main-content .ssmp-shopping-list-category table td {
+	font-size: 16px;
+}
+
+.main-content .ssmp-shopping-list-category table tbody tr:nth-child( 2n ) {
+	background-color: #E5E5E5;
+}
+
+.main-content .ssmp-shopping-list-category table tr:last-child td {
+ 	border-bottom: none;
+}
+
+.ssmp-category-title {
+ 	color: #FFFFFF;
+ 	font-size: 20px;
+	line-height: 26px;
+	letter-spacing: 2px;
+	background-color: #1E1E4B;
+}
+
+/**
+ * MISCELLANEOUS STYLES
+ */
+.align-center {
+	text-align: center;
+}
+
+.recipe-info-mar-top {
+	margin-top: 20px;
+}
+
+.recipe-info-mar-top-sml {
+	margin-top: 5px;
+}
+
+#save-dish-modal .modal-dialog {
+    margin-left:15%;
+    margin-right:15%;
+    width:70%;
+}
+
+.fullinput {
+    width:100% !important;
+}
+
+.main-info {
+  margin-top: 3%;
+  margin-left: 0%;
+  display: inline-block;
+  float: left;
+  width: 30%;
+}
+
+.hidden {
+    display: none
+}

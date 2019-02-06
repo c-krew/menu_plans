@@ -1,49 +1,349 @@
 {% extends "menu_plans/base.html" %}
+{% load staticfiles %}
 {% load tethys_gizmos %}
 
 {% block header_buttons %}
-  <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
-    <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
+  <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="save-dish">
+    <a data-toggle="modal" data-target="#save-dish-modal">Save New Dish</span></a>
+  </div>
+  <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="edit-dish">
+    <a data-toggle="modal" data-target="#edit-dish-modal">Edit Dish</span></a>
   </div>
 {% endblock %}
 
 {% block app_content %}
+  {% csrf_token %}
   <h1>Welcome to your Tethys App!</h1>
-  <p>Take advantage of beautiful typography to organize the content of your app:</p>
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
+  <div class="ssmp-recipe-container">
+    <div class="ssmp-recipe-image">
+      <div class="recipe-image">
+        <img src="{% static 'menu_plans/images/ChickenandPearQuinoa.jpg' %}" />
+      </div>
+    </div>
+    <div class="ssmp-recipe-info" data-fe-recipe="2877">
+    <div class="ssmp-recipe-title recipe-info-mar-top">
+      Chicken and Pear Quinoa Salad
+    </div>
+    <div class="ssmp-meal-type recipe-info-mar-top-sml">
+      MAIN DISH
+    </div>
+    <div class="ssmp-preparation-items recipe-info-mar-top-sml">
+      <div class="yield ssmp-preparation-item">
+        Serves: 4
+      </div>
+      <div class="prep-time ssmp-preparation-item">
+        Prep Time: 10 Minutes
+      </div>
+      <div class="cook-time ssmp-preparation-item">
+        Cook Time: 10 Minutes
+      </div>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      NUTRITION PER SERVING:
+    </div>
+    <div class="ssmp-nutrition-items">
+      <div class="calories ssmp-nutrition-item">
+        Calories: 348
+      </div>
+      <div class="fat ssmp-nutrition-item">
+        Total Fat: 12.8g
+      </div>
+      <div class="carbs ssmp-nutrition-item">
+        Carbohydrates: 32.5g
+      </div>
+      <div class="protein ssmp-nutrition-item">
+        Protein: 27.1g
+      </div>
+      <div class="satfat ssmp-nutrition-item">
+        Saturated Fat: 2.1g
+      </div>
+      <div class="sodium ssmp-nutrition-item">
+        Sodium: 170mg
+      </div>
+      <div class="sugar ssmp-nutrition-item">
+        Sugar: 11.1g
+      </div>
+      <div class="cholesterol ssmp-nutrition-item">
+        Cholesterol: 65mg
+      </div>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      INGREDIENTS:
+    </div>
+    <div class="ssmp-recipe-ingredients">
+      <ul>
+        <li>1/2 cup uncooked quinoa</li>
+        <li>1 (10 ounce) package of baby spinach</li>
+        <li>1/2 cup dried cranberries</li>
+        <li>1/2 cup honey roasted sliced almonds</li>
+        <li>2 pears (diced)</li>
+        <li>2-3 boneless, skinless chicken breasts (cooked and chopped)</li>
+        <li>2 Tablespoons feta cheese</li><li>1 bottle light raspberry vinaigrette</li>
+      </ul>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      DIRECTIONS:
+    </div>
+    <div class="ssmp-recipe-directions">
+      <ol>
+        <li>Cook quinoa according to directions. </li>
+        <li>In a bowl, toss together spinach, cranberries, almonds, pears, chicken, feta cheese, and quinoa. </li>
+        <li>Serve with your favorite dressing (such as raspberry vinaigrette) and enjoy! Nutrition facts do not include the salad dressing, as each salad dressing will vary.</li>
+      </ol>
+    </div>
+    </div>
+  </div>
+  <div class="ssmp-recipe-container">
+    <div class="ssmp-recipe-image">
+      <div class="recipe-image">
+        <img src="{% static 'menu_plans/images/ChickenandPearQuinoa.jpg' %}" />
+      </div>
+    </div>
+    <div class="ssmp-recipe-info" data-fe-recipe="2877">
+    <div class="ssmp-recipe-title recipe-info-mar-top">
+      Chicken and Pear Quinoa Salad
+    </div>
+    <div class="ssmp-meal-type recipe-info-mar-top-sml">
+      MAIN DISH
+    </div>
+    <div class="ssmp-preparation-items recipe-info-mar-top-sml">
+      <div class="yield ssmp-preparation-item">
+        Serves: 4
+      </div>
+      <div class="prep-time ssmp-preparation-item">
+        Prep Time: 10 Minutes
+      </div>
+      <div class="cook-time ssmp-preparation-item">
+        Cook Time: 10 Minutes
+      </div>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      NUTRITION PER SERVING:
+    </div>
+    <div class="ssmp-nutrition-items">
+      <div class="calories ssmp-nutrition-item">
+        Calories: 348
+      </div>
+      <div class="fat ssmp-nutrition-item">
+        Total Fat: 12.8g
+      </div>
+      <div class="carbs ssmp-nutrition-item">
+        Carbohydrates: 32.5g
+      </div>
+      <div class="protein ssmp-nutrition-item">
+        Protein: 27.1g
+      </div>
+      <div class="satfat ssmp-nutrition-item">
+        Saturated Fat: 2.1g
+      </div>
+      <div class="sodium ssmp-nutrition-item">
+        Sodium: 170mg
+      </div>
+      <div class="sugar ssmp-nutrition-item">
+        Sugar: 11.1g
+      </div>
+      <div class="cholesterol ssmp-nutrition-item">
+        Cholesterol: 65mg
+      </div>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      INGREDIENTS:
+    </div>
+    <div class="ssmp-recipe-ingredients">
+      <ul>
+        <li>1/2 cup uncooked quinoa</li>
+        <li>1 (10 ounce) package of baby spinach</li>
+        <li>1/2 cup dried cranberries</li>
+        <li>1/2 cup honey roasted sliced almonds</li>
+        <li>2 pears (diced)</li>
+        <li>2-3 boneless, skinless chicken breasts (cooked and chopped)</li>
+        <li>2 Tablespoons feta cheese</li><li>1 bottle light raspberry vinaigrette</li>
+      </ul>
+    </div>
+    <div class="ssmp-subsection-title recipe-info-mar-top">
+      DIRECTIONS:
+    </div>
+    <div class="ssmp-recipe-directions">
+      <ol>
+        <li>Cook quinoa according to directions. </li>
+        <li>In a bowl, toss together spinach, cranberries, almonds, pears, chicken, feta cheese, and quinoa. </li>
+        <li>Serve with your favorite dressing (such as raspberry vinaigrette) and enjoy! Nutrition facts do not include the salad dressing, as each salad dressing will vary.</li>
+      </ol>
+    </div>
+    </div>
+  </div>
 {% endblock %}
 
 {# Use the after_app_content block for modals #}
 {% block after_app_content %}
   <!-- Example Modal -->
-  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
+  <div class="modal fade" id="save-dish-modal" tabindex="-1" role="dialog" aria-labelledby="save-dish-modal-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="add-meal-form" method="post">
+            {% csrf_token %}
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title" id="save-dish-modal-label">Save Dish</h5>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="dish-tab" data-toggle="tab" href="#dish" role="tab" aria-controls="dish" aria-selected="true">Main Dish</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="nutrition-tab" data-toggle="tab" href="#nutrition" role="tab" aria-controls="nutrition" aria-selected="false">Nutrition</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="ingredient-tab" data-toggle="tab" href="#ingredient" role="tab" aria-controls="ingredient" aria-selected="false">Ingredients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="direction-tab" data-toggle="tab" href="#direction" role="tab" aria-controls="direction" aria-selected="false">Directions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="image-tab" data-toggle="tab" href="#image" role="tab" aria-controls="image" aria-selected="false">Image</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade active" id="dish" role="tabpanel" aria-labelledby="dish-tab">
+              <h3>Main Dish</h3>
+              <table class="table table-hover" id="dishtable">
+                <thead>
+                  <tr>
+                    <th width="150%">Dish Name</th>
+                    <th>Serves</th>
+                    <th>Prep Time</th>
+                    <th>Cook Time</th>
+                    <th>Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="fullinput" type="text" id="dishnameinput"></td>
+                    <td><input type="text" id="servesinput"></td>
+                    <td><input type="text" id="prepinput"></td>
+                    <td><input type="text" id="cookinput"></td>
+                    <td><input type="text" id="rating"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="nutrition" role="tabpanel" aria-labelledby="nutrition-tab">
+              <h3>Nutrition</h3>
+              <table class="table table-hover" id="nutritiontable">
+                <thead>
+                  <tr>
+                    <th>Calories</th>
+                    <th>Carbohydrates</th>
+                    <th>Saturated Fat</th>
+                    <th>Total Fat</th>
+                    <th>Sugar</th>
+                    <th>Protein</th>
+                    <th>Cholesterol</th>
+                    <th>Sodium</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" style="width:100%" id="calinput"></td>
+                    <td><input type="text" style="width:100%" id="carbinput"></td>
+                    <td><input type="text" style="width:100%" id="satfatinput"></td>
+                    <td><input type="text" style="width:100%" id="totfatinput"></td>
+                    <td><input type="text" style="width:100%" id="sugarinput"></td>
+                    <td><input type="text" style="width:100%" id="proteininput"></td>
+                    <td><input type="text" style="width:100%" id="cholinput"></td>
+                    <td><input type="text" style="width:100%" id="sodiuminput"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="ingredient" role="tabpanel" aria-labelledby="ingredient-tab">
+              <h3>Ingredients</h3>
+              <table class="table table-hover" id="ingredienttable">
+                <thead>
+                  <tr>
+                    <th width="150%">Ingredient</th>
+                    <th>Quantity</th>
+                    <th>Measure</th>
+                    <th>Cook Method</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="fullinput" type="text"></td>
+                    <td><input type="text" style="width:100%"></td>
+                    <td><input type="text" style="width:120%"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-success" onclick="add_ingredient()">Add Row</button>
+            </div>
+            <div class="tab-pane fade" id="direction" role="tabpanel" aria-labelledby="direction-tab">
+              <h3>Cooking Directions</h3>
+              <table class="table table-hover" id="directiontable">
+                <thead>
+                  <tr>
+                    <th width="5%">Step Number</th>
+                    <th>Direction</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td><input type="text" style="width:100%"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-success" onclick="add_direction()">Add Row</button>
+            </div>
+            <div class="tab-pane fade" id="image" role="tabpanel" aria-labelledby="image-tab">
+              <h3>Image Upload</h3>
+              <input type="file" id="dish-picture">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" data-id="none" onclick="add_new_meal('new')" class="btn btn-primary">Create New</button>
+          <button type="button" id="save-id" data-id="none" onclick="add_new_meal('update')" class="btn btn-primary hidden">Update</button>
+        </div>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="edit-dish-modal" tabindex="-1" role="dialog" aria-labelledby="save-dish-modal-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h5 class="modal-title" id="help-modal-label">Example Modal</h5>
+          <h5 class="modal-title" id="edit-dish-modal-label">Edit Dish</h5>
         </div>
         <div class="modal-body">
-          <p>You can add custom buttons to the app header using the <code>header_buttons</code> block. Use anchor/link tags for the button and wrap it in a div with the class <code>header-button</code>. For buttons with the gliphyicons, add the <code>glyphicon-button</code> class as well.</p>
-          <p>Ever have trouble using a modal in a Tethys app? Use the <code>after_app_content</code> block for modal content to allow them to function properly. See: <a href="https://getbootstrap.com/javascript/#modals">Bootstrap Modals</a></p>
-          <p>Add tooltips to any element by adding the <code>data-toggle</code>, <code>data-placement</code>, and <code>title</code> attributes to the button. See: <a href="https://getbootstrap.com/javascript/#tooltips">Bootstrap Tooltips</a></p>
+          <table id="dish-table" class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>Dish Name</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          <button type="button" onclick="add_new_meal()" class="btn btn-primary">Submit</button>
         </div>
+        </form>
+      </div>
       </div>
     </div>
   </div>
 {% endblock %}
 
 {% block app_actions %}
-  {% gizmo save_button %}
   {% gizmo edit_button %}
   {% gizmo remove_button %}
   {% gizmo previous_button %}

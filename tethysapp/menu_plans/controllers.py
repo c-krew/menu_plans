@@ -7,16 +7,14 @@ def home(request):
     """
     Controller for the app home page.
     """
-    save_button = Button(
-        display_text='',
-        name='save-button',
-        icon='glyphicon glyphicon-floppy-disk',
+
+    add_button = Button(
+        display_text='Add',
+        name='add-meal',
+        icon='glyphicon glyphicon-plus',
         style='success',
-        attributes={
-            'data-toggle':'tooltip',
-            'data-placement':'top',
-            'title':'Save'
-        }
+        attributes={'form': 'add-meal-form'},
+        submit=True
     )
 
     edit_button = Button(
@@ -63,12 +61,22 @@ def home(request):
         }
     )
 
+    # Handle form submission
+    if request.POST and 'add-meal' in request.POST:
+        print(request.POST)
+        # Get values
+        has_errors = False
+        print("HERE")
+        name = request.POST.get('dishnameinput', None)
+        print(name)
+
+
     context = {
-        'save_button': save_button,
+        'add_button': add_button,
         'edit_button': edit_button,
         'remove_button': remove_button,
         'previous_button': previous_button,
-        'next_button': next_button
+        'next_button': next_button,
     }
 
     return render(request, 'menu_plans/home.html', context)

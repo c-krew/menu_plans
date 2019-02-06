@@ -29,6 +29,26 @@ class MenuPlans(TethysAppBase):
                 url='menu-plans',
                 controller='menu_plans.controllers.home'
             ),
+            UrlMap(
+                name='create-meal',
+                url='menu-plans/create-meal',
+                controller='menu_plans.model.create_meal'
+            ),
+            UrlMap(
+                name='get-all-dishes',
+                url='menu-plans/get-all-dishes',
+                controller='menu_plans.model.get_all_dishes'
+            ),
+            UrlMap(
+                name='delete-dish',
+                url='menu-plans/delete-dish',
+                controller='menu_plans.model.delete_dish'
+            ),
+            UrlMap(
+                name='get-dish',
+                url='menu-plans/get-dish',
+                controller='menu_plans.model.get_dish'
+            ),
         )
 
         return url_maps
