@@ -1,12 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from tethys_sdk.gizmos import Button
+from tethys_sdk.gizmos import Button, SelectInput
 
 @login_required()
 def home(request):
     """
     Controller for the app home page.
     """
+
+    dish_type = SelectInput(display_text='',
+                                name='dish-type',
+                                multiple=False,
+                                options=[('Main', 'Main'), ('Side', 'Side'), ('Dessert', 'Dessert')],
+                                initial=['Main'],
+                            )
 
     add_button = Button(
         display_text='Add',
@@ -61,18 +68,9 @@ def home(request):
         }
     )
 
-    # Handle form submission
-    if request.POST and 'add-meal' in request.POST:
-        print(request.POST)
-        # Get values
-        has_errors = False
-        print("HERE")
-        name = request.POST.get('dishnameinput', None)
-        print(name)
-
-
     context = {
         'add_button': add_button,
+        'dish_type': dish_type,
         'edit_button': edit_button,
         'remove_button': remove_button,
         'previous_button': previous_button,

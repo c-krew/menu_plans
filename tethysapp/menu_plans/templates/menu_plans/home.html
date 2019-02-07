@@ -211,6 +211,7 @@
                 <thead>
                   <tr>
                     <th width="150%">Dish Name</th>
+                    <th>Dish Type</th>
                     <th>Serves</th>
                     <th>Prep Time</th>
                     <th>Cook Time</th>
@@ -220,6 +221,7 @@
                 <tbody>
                   <tr>
                     <td><input class="fullinput" type="text" id="dishnameinput"></td>
+                    <td>{% gizmo dish_type %}</td>
                     <td><input type="text" id="servesinput"></td>
                     <td><input type="text" id="prepinput"></td>
                     <td><input type="text" id="cookinput"></td>
@@ -262,18 +264,14 @@
               <table class="table table-hover" id="ingredienttable">
                 <thead>
                   <tr>
-                    <th width="150%">Ingredient</th>
-                    <th>Quantity</th>
-                    <th>Measure</th>
-                    <th>Cook Method</th>
+                    <th width="5%">Ingredient Number</th>
+                    <th>Ingredient</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input class="fullinput" type="text"></td>
+                    <td>1</td>
                     <td><input type="text" style="width:100%"></td>
-                    <td><input type="text" style="width:120%"></td>
-                    <td><input type="text"></td>
                   </tr>
                 </tbody>
               </table>
@@ -305,6 +303,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" onclick="upload_six_sisters ()" class="btn btn-primary">Paste from Six Sisters</button>
           <button type="button" data-id="none" onclick="add_new_meal('new')" class="btn btn-primary">Create New</button>
           <button type="button" id="save-id" data-id="none" onclick="add_new_meal('update')" class="btn btn-primary hidden">Update</button>
         </div>
@@ -313,7 +312,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="edit-dish-modal" tabindex="-1" role="dialog" aria-labelledby="save-dish-modal-label">
+  <div class="modal fade" id="edit-dish-modal" tabindex="-1" role="dialog" aria-labelledby="edit-dish-modal-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -334,7 +333,25 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" onclick="add_new_meal()" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="six-sister-modal" tabindex="-1" role="dialog" aria-labelledby="six-sister-modal-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h5 class="modal-title" id="six-sister-modal-label">Paste from Six Sisters Meal</h5>
+        </div>
+        <div class="modal-body">
+          <textarea rows="4" cols="50" id="ss-paste" style="width:100%" wrap="hard"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" onclick="input_six_sisters ()" class="btn btn-primary">Submit</button>
         </div>
         </form>
       </div>

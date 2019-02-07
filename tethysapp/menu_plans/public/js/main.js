@@ -30,7 +30,11 @@ $.ajaxSetup({
 });
 
 function add_ingredient () {
-    var row = '<td><input class="fullinput" type="text" form="add-meal-form"></td><td><input type="text" style="width:100%" form="add-meal-form"></td><td><input type="text" style="width:120%" form="add-meal-form"></td><td><input type="text" form="add-meal-form"></td>'
+    var thizz = document.getElementById('ingredienttable');
+    var step = $(thizz).closest('table').find('tr:last td:first').text();
+
+    var new_step = parseInt(step) + 1;
+    var row = '<td>' + new_step + '</td><td><input type="text" style="width:100%" form="add-meal-form"></td>'
     $('#ingredienttable > tbody:last-child').append('<tr>' + row + '</tr>');
 }
 
@@ -41,6 +45,30 @@ function add_direction () {
     var new_step = parseInt(step) + 1;
     var row = '<td>' + new_step + '</td><td><input type="text" style="width:100%" form="add-meal-form"></td>'
     $('#directiontable > tbody:last-child').append('<tr>' + row + '</tr>');
+}
+
+function upload_six_sisters () {
+    $('#six-sister-modal').modal('show');
+}
+(36) ["SMALLER FAMILY HEALTHY – GROUND TURKEY SAUSAGE LASAGNA SOUP",
+"Remove Recipe", "MAIN DISH", "Serves: 4", "Prep Time: 20 Minutes", "Cook Time: 20 Minutes",
+"NUTRITION PER SERVING:", "Calories: 357", "Total Fat: 13.4g", "Carbohydrates: 28.1g", "Protein: 32.4g",
+"Fiber: 5.5g", "Saturated Fat: 4.1g", "Sodium: 990mg", "Sugar: 11g", "Cholesterol: 95mg", "INGREDIENTS:",
+"3/4 onion (diced)", "1 1/2 teaspoons minced garlic", "1 pound ground turkey", "4 cups chicken broth",
+"1 (15 ounce) cans petite diced tomatoes (do not drain)", "1 (6 ounce) can tomato paste", "1 teaspoon oregano",
+"1/2 teaspoon Italian seasoning", "2 Tablespoons fresh basil (chopped)",
+"6 whole wheat lasagna noodles (uncooked and broken into bite-sized pieces)", "1 zucchini (diced)",
+"1/3 cup shredded Parmesan cheese", "Salt and pepper, to taste", "DIRECTIONS:",
+"In a large stock pot, add onion, garlic and turkey; cook until turkey is browned. Drain grease.",
+"Add in chicken broth, tomatoes, tomato paste, oregano, Italian seasoning, and basil.",
+"Mix well and bring to a boil.",
+ "Add in broken noodles and zucchini and cook for 8-10 minutes or until noodles are tender.",
+ "Stir in Parmesan cheese and add salt and pepper to taste."]
+
+function input_six_sisters () {
+    var info = $("#ss-paste")
+    console.log(info)
+    console.log(info.val().split("\n"));
 }
 
 function get_all_dishes () {
@@ -90,10 +118,11 @@ function get_dish (d) {
             $('#edit-dish-modal').modal('hide');
             $('#save-dish-modal').modal('show');
             $("#dishtable").find("tbody>tr").find("td:eq(0) input[type='text']").val(response['dish'][1])
-            $("#dishtable").find("tbody>tr").find("td:eq(1) input[type='text']").val(response['dish'][2])
+            $("#dish-type").val(response['dish'][2]).change()
             $("#dishtable").find("tbody>tr").find("td:eq(2) input[type='text']").val(response['dish'][3])
             $("#dishtable").find("tbody>tr").find("td:eq(3) input[type='text']").val(response['dish'][4])
             $("#dishtable").find("tbody>tr").find("td:eq(4) input[type='text']").val(response['dish'][5])
+            $("#dishtable").find("tbody>tr").find("td:eq(5) input[type='text']").val(response['dish'][6])
             $("#nutritiontable").find("tbody>tr").find("td:eq(0) input[type='text']").val(response['nutrition'][1])
             $("#nutritiontable").find("tbody>tr").find("td:eq(1) input[type='text']").val(response['nutrition'][2])
             $("#nutritiontable").find("tbody>tr").find("td:eq(2) input[type='text']").val(response['nutrition'][3])
@@ -108,10 +137,8 @@ function get_dish (d) {
               if (rowCount < response['ingredient'].length) {
                 add_ingredient()
               }
-              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(0) input[type='text']").val(response['ingredient'][i][3])
-              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(1) input[type='text']").val(response['ingredient'][i][4])
-              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(2) input[type='text']").val(response['ingredient'][i][5])
-              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(3) input[type='text']").val(response['ingredient'][i][6])
+              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(0) input[type='text']").val(response['ingredient'][i][2])
+              $("#ingredienttable").find("tbody").find("tr:eq(" + i + ")").find("td:eq(1) input[type='text']").val(response['ingredient'][i][3])
             }
             var i;
             for (i = 0; i < response['direction'].length; i++) {
@@ -135,6 +162,7 @@ function add_new_meal (create_type) {
         var db_id = "none"
     }
     var dish_name = $("#dishnameinput").val()
+    var dish_type = $("#dish-type").val()
     var serves = $("#servesinput").val()
     var prep = $("#prepinput").val()
     var cook = $("#cookinput").val()
@@ -150,14 +178,9 @@ function add_new_meal (create_type) {
 
     var ingredients = {};
     $("#ingredienttable").find("tbody>tr").each(function (i, el) {
-        var ingredient = $(this).find("td:eq(0) input[type='text']").val()
-        var quantity = $(this).find("td:eq(1) input[type='text']").val()
-        var measure = $(this).find("td:eq(2) input[type='text']").val()
-        var method = $(this).find("td:eq(3) input[type='text']").val()
-        ingredients[ingredient] = {}
-        ingredients[ingredient]['quantity'] = quantity
-        ingredients[ingredient]['measure'] = measure
-        ingredients[ingredient]['method'] = method
+        var step = $(this).find("td:eq(0)").text()
+        var ingredient = $(this).find("td:eq(1) input[type='text']").val()
+        ingredients[step] = ingredient
     });
 
     var directions = {};
@@ -175,6 +198,7 @@ function add_new_meal (create_type) {
         type: 'POST',
         data: {'db_id': db_id,
                'dish_name':dish_name,
+               'dish_type': dish_type,
                'serves':serves,
                'prep':prep,
                'cook':cook,

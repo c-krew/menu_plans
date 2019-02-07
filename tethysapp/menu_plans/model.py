@@ -17,6 +17,7 @@ def create_database():
     dishtable = 'dish' # name of the table
     dishcolumns = [
         ['name', 'string'],
+        ['dish_type', 'string'],
         ['serves', 'integer'],
         ['prep', 'integer'],
         ['cook', 'integer'],
@@ -60,11 +61,8 @@ def create_database():
     ingredienttable = 'ingredient' # name of the table
     ingcolumns = [
         ['ingredientid', 'string'],
-        ['number', 'integer'],
+        ['step', 'integer'],
         ['ingredient', 'string'],
-        ['quantity', 'float'],
-        ['measure', 'string'],
-        ['method', 'string'],
     ]
 
     exe = 'CREATE TABLE {} ('.format(ingredienttable)
@@ -119,11 +117,12 @@ def create_meal(request):
         db_id = None
 
     dish_name = request.POST.get('dish_name')
+    dish_type = request.POST.get('dish_type')
     serves = request.POST.get('serves')
     prep = request.POST.get('prep')
     cook = request.POST.get('cook')
     rating = request.POST.get('rating')
-    meal = Meal(dish_name, serves, prep, cook, rating)
+    meal = Meal(dish_name, dish_type, serves, prep, cook, rating)
 
     calories = request.POST.get('cal')
     carbs = request.POST.get('carb')
@@ -134,9 +133,6 @@ def create_meal(request):
     cholestoral = request.POST.get('chol')
     sodium = request.POST.get('sodium')
     image = request.FILES.get('image')
-    print(image)
-    print("image")
-    print(dish_name)
 
     meal.nutrition = Nutrition(calories=calories, total_fat=total_fat, carbs=carbs, protein=protein, sat_fat=saturated_fat, sodium=sodium, sugar=sugar, chol=cholestoral)
     meal.ingredient = Ingredient()
@@ -145,11 +141,7 @@ def create_meal(request):
     ingredients = json.loads(request.POST.get('ingredients'))
 
     for ingredient in ingredients:
-        meal.ingredient.add_ingredient(ingredient,
-                                       ingredients[ingredient]['quantity'],
-                                       ingredients[ingredient]['measure'],
-                                       ingredients[ingredient]['method'],
-                                       )
+        meal.ingredient.add_ingredient(ingredient, ingredients[ingredient])
 
     directions = json.loads(request.POST.get('directions'))
 
@@ -219,9 +211,10 @@ def delete_dish(request):
     return get_all_dishes(request)
 
 class Meal:
-    def __init__(self, name, serve, prep, cook, rating):
+    def __init__(self, name, dish_type, serve, prep, cook, rating):
         self.id = None
         self.name = name
+        self.dish_type = dish_type
         self.serve = serve
         self.prep = prep
         self.cook = cook
@@ -271,14 +264,14 @@ class Meal:
             ingredient_id = None
             if self.ingredient:
                 for key in self.ingredient.ingredients:
-                    sql = ''' INSERT INTO ingredient(ingredientid, number,ingredient,quantity,measure,method)
-                                  VALUES(?,?,?,?,?,?) '''
+                    sql = ''' INSERT INTO ingredient(ingredientid, step, ingredient)
+                                  VALUES(?,?,?) '''
                     ingredient_inputs = [str(self.get_id()),
                                          key,
-                                         self.ingredient.ingredients[key]['ingredient'],
-                                         self.ingredient.ingredients[key]['quantity'],
-                                         self.ingredient.ingredients[key]['measure'],
-                                         self.ingredient.ingredients[key]['method'],]
+                                         self.ingredient.ingredients[key]]
+                    print(key)
+                    print(self.ingredient.ingredients)
+                    print(ingredient_inputs)
                     cur = conn.cursor()
                     cur.execute(sql, ingredient_inputs)
 
@@ -292,11 +285,11 @@ class Meal:
                     cur = conn.cursor()
                     cur.execute(sql, direction_inputs)
 
-
-            sql = ''' INSERT INTO dish(id,name,serves,prep,cook,rating,nutritionid,ingredientid,directionid)
-                          VALUES(?,?,?,?,?,?,?,?,?) '''
+            sql = ''' INSERT INTO dish(id,name,dish_type,serves,prep,cook,rating,nutritionid,ingredientid,directionid)
+                          VALUES(?,?,?,?,?,?,?,?,?,?) '''
             dish_inputs = [str(self.get_id()),
                            self.name,
+                           self.dish_type,
                            self.serve,
                            self.prep,
                            self.cook,
@@ -328,11 +321,8 @@ class Meal:
             ingredient_id = None
             if self.ingredient:
                 for key in self.ingredient.ingredients:
-                    sql = ''' UPDATE ingredient SET ingredient=?,quantity=?,measure=?,method=? WHERE ingredientid=? AND number=?'''
-                    ingredient_inputs = [self.ingredient.ingredients[key]['ingredient'],
-                                         self.ingredient.ingredients[key]['quantity'],
-                                         self.ingredient.ingredients[key]['measure'],
-                                         self.ingredient.ingredients[key]['method'],
+                    sql = ''' UPDATE ingredient SET ingredient=? WHERE ingredientid=? AND step=?'''
+                    ingredient_inputs = [self.ingredient.ingredients[key],
                                          db_id,
                                          key
                                          ]
@@ -350,8 +340,9 @@ class Meal:
                     cur.execute(sql, direction_inputs)
 
 
-            sql = ''' UPDATE dish SET name=?,serves=?,prep=?,cook=?,rating=? WHERE id=?'''
+            sql = ''' UPDATE dish SET name=?, dish_type=?,serves=?,prep=?,cook=?,rating=? WHERE id=?'''
             dish_inputs = [self.name,
+                           self.dish_type,
                            self.serve,
                            self.prep,
                            self.cook,
@@ -378,13 +369,9 @@ class Ingredient:
         self.total_ingredients = 0
         self.ingredients = {}
 
-    def add_ingredient(self, ingredient, quantity, measure, method):
+    def add_ingredient(self, number, ingredient):
         self.total_ingredients += 1
-        self.ingredients[self.total_ingredients] = {}
-        self.ingredients[self.total_ingredients]['ingredient']= ingredient
-        self.ingredients[self.total_ingredients]['quantity'] = quantity
-        self.ingredients[self.total_ingredients]['measure'] = measure
-        self.ingredients[self.total_ingredients]['method'] = method
+        self.ingredients[number] = ingredient
 
 class Direction:
     def __init__(self):
