@@ -45,7 +45,8 @@ def create_database():
         ['sugar', 'float'],
         ['protein', 'float'],
         ['cholesterol', 'float'],
-        ['sodium', 'float']
+        ['sodium', 'float'],
+        ['fiber', 'float'],
     ]
 
     exe = 'CREATE TABLE {} ('.format(nutritiontable)
@@ -132,9 +133,10 @@ def create_meal(request):
     protein = request.POST.get('protein')
     cholestoral = request.POST.get('chol')
     sodium = request.POST.get('sodium')
+    fiber = request.POST.get('fiber')
     image = request.FILES.get('image')
 
-    meal.nutrition = Nutrition(calories=calories, total_fat=total_fat, carbs=carbs, protein=protein, sat_fat=saturated_fat, sodium=sodium, sugar=sugar, chol=cholestoral)
+    meal.nutrition = Nutrition(calories=calories, total_fat=total_fat, carbs=carbs, protein=protein, sat_fat=saturated_fat, sodium=sodium, sugar=sugar, chol=cholestoral, fiber=fiber)
     meal.ingredient = Ingredient()
     meal.direction = Direction()
 
@@ -229,8 +231,8 @@ class Meal:
 
         return self.id
 
-    def add_nutrition(self, calories, total_fat, carbs, protein, sat_fat, sodium, sugar, chol):
-        self.nutrition = Nutrition(calories, total_fat, carbs, protein, sat_fat, sodium, sugar, chol)
+    def add_nutrition(self, calories, total_fat, carbs, protein, sat_fat, sodium, sugar, chol, fiber):
+        self.nutrition = Nutrition(calories, total_fat, carbs, protein, sat_fat, sodium, sugar, chol, fiber)
 
     def add_ingredients(self):
         self.ingredient = Ingredient()
@@ -247,8 +249,8 @@ class Meal:
         if not db_id:
 
             if self.nutrition:
-                sql = ''' INSERT INTO nutrition(id,calories,carbohydrates,saturated_fat,total_fat,sugar,protein,cholesterol, sodium)
-                              VALUES(?,?,?,?,?,?,?,?,?) '''
+                sql = ''' INSERT INTO nutrition(id,calories,carbohydrates,saturated_fat,total_fat,sugar,protein,cholesterol,sodium,fiber)
+                              VALUES(?,?,?,?,?,?,?,?,?,?) '''
                 nutrition_inputs = [str(self.get_id()),
                                     self.nutrition.calories,
                                     self.nutrition.carbs,
@@ -257,7 +259,8 @@ class Meal:
                                     self.nutrition.sugar,
                                     self.nutrition.protein,
                                     self.nutrition.chol,
-                                    self.nutrition.sodium]
+                                    self.nutrition.sodium,
+                                    self.nutrition.fiber]
                 cur = conn.cursor()
                 cur.execute(sql, nutrition_inputs)
 
@@ -305,7 +308,7 @@ class Meal:
         else:
 
             if self.nutrition:
-                sql = ''' UPDATE nutrition SET calories=?,carbohydrates=?,saturated_fat=?,total_fat=?,sugar=?,protein=?,cholesterol=?, sodium=? WHERE id=?'''
+                sql = ''' UPDATE nutrition SET calories=?,carbohydrates=?,saturated_fat=?,total_fat=?,sugar=?,protein=?,cholesterol=?, sodium=?, fiber=? WHERE id=?'''
                 nutrition_inputs = [self.nutrition.calories,
                                     self.nutrition.carbs,
                                     self.nutrition.sat_fat,
@@ -314,6 +317,7 @@ class Meal:
                                     self.nutrition.protein,
                                     self.nutrition.chol,
                                     self.nutrition.sodium,
+                                    self.nutrition.fiber,
                                     db_id]
                 cur = conn.cursor()
                 cur.execute(sql, nutrition_inputs)
@@ -354,7 +358,7 @@ class Meal:
             conn.close()
 
 class Nutrition:
-    def __init__(self, calories=0, total_fat=0, carbs=0, protein=0, sat_fat=0, sodium=0, sugar=0, chol=0):
+    def __init__(self, calories=0, total_fat=0, carbs=0, protein=0, sat_fat=0, sodium=0, sugar=0, chol=0, fiber=0):
         self.calories = calories
         self.total_fat = total_fat
         self.carbs = carbs
@@ -363,6 +367,7 @@ class Nutrition:
         self.sodium = sodium
         self.sugar = sugar
         self.chol = chol
+        self.fiber = fiber
 
 class Ingredient:
     def __init__(self):

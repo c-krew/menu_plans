@@ -50,25 +50,48 @@ function add_direction () {
 function upload_six_sisters () {
     $('#six-sister-modal').modal('show');
 }
-(36) ["SMALLER FAMILY HEALTHY – GROUND TURKEY SAUSAGE LASAGNA SOUP",
-"Remove Recipe", "MAIN DISH", "Serves: 4", "Prep Time: 20 Minutes", "Cook Time: 20 Minutes",
-"NUTRITION PER SERVING:", "Calories: 357", "Total Fat: 13.4g", "Carbohydrates: 28.1g", "Protein: 32.4g",
-"Fiber: 5.5g", "Saturated Fat: 4.1g", "Sodium: 990mg", "Sugar: 11g", "Cholesterol: 95mg", "INGREDIENTS:",
-"3/4 onion (diced)", "1 1/2 teaspoons minced garlic", "1 pound ground turkey", "4 cups chicken broth",
-"1 (15 ounce) cans petite diced tomatoes (do not drain)", "1 (6 ounce) can tomato paste", "1 teaspoon oregano",
-"1/2 teaspoon Italian seasoning", "2 Tablespoons fresh basil (chopped)",
-"6 whole wheat lasagna noodles (uncooked and broken into bite-sized pieces)", "1 zucchini (diced)",
-"1/3 cup shredded Parmesan cheese", "Salt and pepper, to taste", "DIRECTIONS:",
-"In a large stock pot, add onion, garlic and turkey; cook until turkey is browned. Drain grease.",
-"Add in chicken broth, tomatoes, tomato paste, oregano, Italian seasoning, and basil.",
-"Mix well and bring to a boil.",
- "Add in broken noodles and zucchini and cook for 8-10 minutes or until noodles are tender.",
- "Stir in Parmesan cheese and add salt and pepper to taste."]
 
 function input_six_sisters () {
-    var info = $("#ss-paste")
-    console.log(info)
-    console.log(info.val().split("\n"));
+    var info = $("#ss-paste").val().split("\n")
+    $('#six-sister-modal').modal('hide');
+    $('#save-dish-modal').modal('show');
+    $("#dishtable").find("tbody>tr").find("td:eq(0) input[type='text']").val(info[0].slice(30));
+    $("#dishtable").find("tbody>tr").find("td:eq(2) input[type='text']").val(info[3].slice(8))
+    $("#dishtable").find("tbody>tr").find("td:eq(3) input[type='text']").val(info[4].slice(11,13))
+    $("#dishtable").find("tbody>tr").find("td:eq(4) input[type='text']").val(info[5].slice(11,13))
+
+    var i;
+    for (i = 7; i < 16; i++) {
+        data = info[i].split(":")
+        nutrition = data[0].replace(" ", "").toLowerCase()
+        number = data[1].split(/([0-9]+)/)
+        value = ''
+        var x;
+        for (x = 1; x < number.length - 1; x++) {
+            value += number[x]
+        }
+        $("#" + nutrition + "input").val(value)
+    }
+
+    tabletype = 'ingredient'
+    row = 0
+    var y;
+    for (y=17; y < info.length; y++) {
+        if (info[y].slice(0,-1).toLowerCase() == 'directions') {
+            tabletype = 'direction';
+            row = 0;
+            continue;
+        }
+        if (row > 0) {
+            if (tabletype == 'ingredient') {
+                add_ingredient()
+            } else {
+                add_direction()
+            }
+        }
+        $('#' + tabletype + 'table').find("tr:eq(" + (row + 1) + ")").find("td:eq(1)  input[type='text']").val(info[y]);
+        row++
+    }
 }
 
 function get_all_dishes () {
@@ -131,6 +154,7 @@ function get_dish (d) {
             $("#nutritiontable").find("tbody>tr").find("td:eq(5) input[type='text']").val(response['nutrition'][6])
             $("#nutritiontable").find("tbody>tr").find("td:eq(6) input[type='text']").val(response['nutrition'][7])
             $("#nutritiontable").find("tbody>tr").find("td:eq(7) input[type='text']").val(response['nutrition'][8])
+            $("#nutritiontable").find("tbody>tr").find("td:eq(8) input[type='text']").val(response['nutrition'][9])
             var i;
             for (i = 0; i < response['ingredient'].length; i++) {
               var rowCount = $('#ingredienttable tbody tr').length;
@@ -167,14 +191,15 @@ function add_new_meal (create_type) {
     var prep = $("#prepinput").val()
     var cook = $("#cookinput").val()
     var rating = $("#rating").val()
-    var cal = $("#calinput").val()
-    var carb = $("#carbinput").val()
-    var satfat = $("#satfatinput").val()
-    var totfat = $("#totfatinput").val()
+    var cal = $("#caloriesinput").val()
+    var carb = $("#carbohydratesinput").val()
+    var satfat = $("#saturatedfatinput").val()
+    var totfat = $("#totalfatinput").val()
     var sugar = $("#sugarinput").val()
     var protein = $("#proteininput").val()
-    var chol = $("#cholinput").val()
+    var chol = $("#cholesterolinput").val()
     var sodium = $("#sodiuminput").val()
+    var fiber= $("#fiberinput").val()
 
     var ingredients = {};
     $("#ingredienttable").find("tbody>tr").each(function (i, el) {
@@ -211,6 +236,7 @@ function add_new_meal (create_type) {
                'protein':protein,
                'chol':chol,
                'sodium':sodium,
+               'fiber':fiber,
                'ingredients':JSON.stringify(ingredients),
                'directions':JSON.stringify(directions)
                },
